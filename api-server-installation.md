@@ -6,10 +6,6 @@ The API-server is the central server for all systems developed for this e-librar
 Installation
 ================
 
- step 4 else,
-
-continue from step one.
-
 #### Step 1: Source Code
 
 If you already have the [Elibrary-API](https://github.com/leocss/elibrary-api) repository on your local machine, you can skip this step.
