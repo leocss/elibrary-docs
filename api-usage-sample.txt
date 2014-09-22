@@ -1,0 +1,75 @@
+
+
+The format i would be using here would be 
+  
+  [HTTP_METHOD] [URI]
+
+  [DATA] (Data required for POST and PUT http methods)
+
+For example
+  
+  GET /resource/id
+
+What this means is make a 'GET' request to the url 'http://elibrary-server-url/resource/id'.
+If you are developing locally, Change 'elibrary-server-url' to whatever the api server is 
+running on your maching. For example `http://127.0.0.1:4000/resource/id`
+
+# GET /books
+
++ Response 200 (application/json)
+
+
+
+Gets all books from the library. 
+
+This endpoint also provides meaninful filters with syntatical 
+sugar for querying books.
+
+###### GET /books?filter=10_most_borrowed 
+
+Returns 10 most borrowed books. Note: The '10' can be changed to any number for example 
+`GET /books?filter=24_most_borrowed`
+
+# GET /books?filter=5_latest
+
+This returns 5 latest books added to the library. Note: Just like the above filter, The '5' can
+be changed to any number eg. `GET /books?filter=30_latest`
+
+You are free to suggest more filters.
+
+### GET /books/:id
+
+Gets a book using its id.
+
+### GET /books/random
+
+Gets a random book.
+
+
+
+
+
+`client_id`: Your elibrary client id
+`client_secret`: Your elibrary client secret
+`user_unique_id`: Ask user for this, somewhere around login. (For students, its their matric number, for staffs, its their staff id)
+`user_password`: Ask user for this too...
+
++ Headers
+
+  Content-Type: application/x-www-form-urlencoded
+
++ Request
+
+    {
+      'grant_type': 'password',
+      'client_id': '...',
+      'client_secret': '...',
+      'user_unique_id' : '...',
+      'user_password' : '...'
+    }
+
++ Response
+  
+    {
+
+    }

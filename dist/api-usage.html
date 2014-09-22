@@ -1,0 +1,268 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>E-Library API</title><link rel="stylesheet" href="assets/styles/bootstrap.css"><link rel="stylesheet" type="text/css" href="assets/styles/font-awesome.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200"><style>pre code{display:block;padding:.5em;color:#333}
+/* Highlight.js Theme Tomorrow */
+.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}</style><style>body,
+h4,
+h5 {
+  font-family: 'Roboto' sans-serif !important;
+}
+h1,
+h2,
+h3,
+.aglio {
+  font-family: 'Raleway' sans-serif !important;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a {
+  display: none;
+}
+h1:hover a,
+h2:hover a,
+h3:hover a,
+h4:hover a,
+h5:hover a {
+  display: inline;
+}
+code {
+  color: #444;
+  background-color: #ddd;
+  font-family: 'Inconsolata' monospace !important;
+}
+a[data-target] {
+  cursor: pointer;
+}
+h4 {
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.back-to-top {
+  position: fixed;
+  z-index: 1;
+  bottom: 0px;
+  right: 24px;
+  padding: 4px 8px;
+  background-color: #eee;
+  text-decoration: none !important;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-left: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(0,0,0,0.1);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.panel {
+  overflow: hidden;
+}
+.panel-heading code {
+  background-color: transparent;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.panel-heading h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+a.list-group-item {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+a.list-group-item.heading {
+  background-color: #ecf0f1;
+}
+.list-group-item.collapse {
+  display: none;
+}
+.list-group-item.collapse.in {
+  display: block;
+}
+#nav {
+  margin-top: 38px;
+  min-width: 255px;
+  top: 0;
+  bottom: 0;
+  padding-right: 12px;
+  padding-bottom: 12px;
+  overflow-y: auto;
+}
+@media (max-width: 1199px) {
+  #nav {
+    min-width: 212px;
+  }
+}
+</style></head><body><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><div class="col-md-3"><nav id="nav" class="hidden-sm hidden-xs affix nav"><div class="list-group"><a href="#authentication" class="list-group-item heading">Authentication</a><a href="#authentication-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /oauth2/token</a></div><div class="list-group"><a href="#books" class="list-group-item heading">Books</a><a href="#books-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /books/</a><a href="#books-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /books/:id/</a><a href="#books-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /books/random</a><a href="#books-" class="list-group-item"><i class="fa fa-warning"></i>&nbsp;DELETE /books/:id</a><a href="#books-" class="list-group-item"><i class="fa fa-plus-square"></i>&nbsp;POST /books/:id</a></div><div class="list-group"><a href="#print-jobs" class="list-group-item heading">Print Jobs</a></div><div class="list-group"><a href="#articles" class="list-group-item heading">Articles</a></div><div class="list-group"><a href="#users" class="list-group-item heading">Users</a><a href="#users-" class="list-group-item"><i class="fa fa-arrow-circle-down"></i>&nbsp;GET /users/:id</a></div><div class="list-group"><a href="#undocumented-api-endpoints" class="list-group-item heading">Undocumented API Endpoints</a></div></nav></div><div class="col-md-9"><div><header><div class="page-header"><h1 id="top">E-Library API</h1></div></header><div class="description"></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="authentication">Authentication&nbsp;<a href="#authentication"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="authentication-">Resources&nbsp;<a href="#authentication-"><i class="fa fa-link"></i></a></h4><section id="authentication--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#authentication--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/oauth2/token</code></div></div><div class="panel-body"><p>Request for an access token using the Oauth2 User Password/Credentials flow.</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#cc5fa3c5b3696dcd3967d7508daecaec" class="pull-right">Toggle</a></li><li id="cc5fa3c5b3696dcd3967d7508daecaec" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-setting">grant_type=<span class="hljs-value">password</span></span>
+<span class="hljs-setting">client_id=<span class="hljs-value">testclient</span></span>
+<span class="hljs-setting">client_secret=<span class="hljs-value">testsecret</span></span>
+<span class="hljs-setting">user_unique_id=<span class="hljs-value"><span class="hljs-number">2009</span>/<span class="hljs-number">1</span>/<span class="hljs-number">32435</span>CT</span></span>
+<span class="hljs-setting">user_password=<span class="hljs-value"><span class="hljs-number">123456</span></span></span>
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#9955fe1e7a4ed093c8932f72f483f94d" class="pull-right">Toggle</a></li><li id="9955fe1e7a4ed093c8932f72f483f94d" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>    {
+      "<span class="hljs-attribute">data</span>":<span class="hljs-value">{
+        "<span class="hljs-attribute">access_token</span>":<span class="hljs-value"><span class="hljs-string">"3d87aae50a5aa0e504af1bc10f658c29e14ddb87260aa8ee395f1270d68f1679b9d78d5b23a5472bacd1abc9b03b21ce"</span></span>,
+        "<span class="hljs-attribute">token_type</span>":<span class="hljs-value"><span class="hljs-string">"Bearer"</span></span>,
+        "<span class="hljs-attribute">expires_in</span>":<span class="hljs-value"><span class="hljs-number">3600</span></span>,
+        "<span class="hljs-attribute">created_at</span>":<span class="hljs-value"><span class="hljs-string">"2014-09-22T01:02:20.017Z"</span></span>,
+        "<span class="hljs-attribute">user_id</span>":<span class="hljs-value"><span class="hljs-number">1</span>
+      </span>}
+    </span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="books">Books&nbsp;<a href="#books"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="books-">Resources&nbsp;<a href="#books-"><i class="fa fa-link"></i></a></h4><section id="books--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#books--get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/books/</code></div></div><div class="panel-body"><p>Gets book collection. A more specific collection may be retrieved using filters as described below.</p>
+<p>Additionally, you can use the <code>filter</code> query to get a specific collection. Supported filters</p>
+<ul>
+<li>GET /books?filter=10_most_borrowed</li>
+<li>GET /books?filter=10_latest</li>
+</ul>
+<p><strong> Note </strong> You can change the value of ‘10’ to any number</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#62b9096c64d202f9fd6cb324c3560148" class="pull-right">Toggle</a></li><li id="62b9096c64d202f9fd6cb324c3560148" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer access_token</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#cc39e13e53d71c49125ba1d14bf499d4" class="pull-right">Toggle</a></li><li id="cc39e13e53d71c49125ba1d14bf499d4" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>    {
+      "<span class="hljs-attribute">data</span>": <span class="hljs-value">[{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Asperiores aut"</span></span>,
+        "<span class="hljs-attribute">category_id</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Dr. Robert Lockman"</span></span>,
+        "<span class="hljs-attribute">edition</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
+        "<span class="hljs-attribute">overview</span>": <span class="hljs-value"><span class="hljs-string">"Natus aliquam voluptatem voluptatibus illo nemo voluptatum dolorem pariatur. Sequi facilis quae occaecati. Iste laboriosam voluptatem assumenda eos sit id. Neque praesentium molestiae at aut maiores."</span></span>,
+        "<span class="hljs-attribute">preview_image</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">has_soft_copy</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">has_hard_copy</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">hard_copies_count</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,
+        "<span class="hljs-attribute">borrow_count</span>": <span class="hljs-value"><span class="hljs-number">6</span></span>,
+        "<span class="hljs-attribute">published_at</span>": <span class="hljs-value"><span class="hljs-string">"1981-04-01T07:00:00.000Z"</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">category</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
+          "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Python"</span></span>,
+          "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span>
+        </span>}
+      </span>}, {
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Dolore dolorem repellendus"</span></span>,
+        "<span class="hljs-attribute">category_id</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Mrs. Eloisa Considine"</span></span>,
+        "<span class="hljs-attribute">edition</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
+        "<span class="hljs-attribute">overview</span>": <span class="hljs-value"><span class="hljs-string">"Dolorem hic repellat consequatur qui molestiae beatae nulla non. Aut in tempore voluptatum veniam. Necessitatibus veniam velit tenetur. Repellendus aperiam aut sit. Dolorum qui id quisquam facere."</span></span>,
+        "<span class="hljs-attribute">preview_image</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">has_soft_copy</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">has_hard_copy</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">hard_copies_count</span>": <span class="hljs-value"><span class="hljs-number">8</span></span>,
+        "<span class="hljs-attribute">borrow_count</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">published_at</span>": <span class="hljs-value"><span class="hljs-string">"1999-09-01T07:00:00.000Z"</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">category</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+          "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Operating System"</span></span>,
+          "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span>
+        </span>}
+      </span>}]
+    </span>}
+</code></pre></li></ul></section><h4 id="books-">Resources&nbsp;<a href="#books-"><i class="fa fa-link"></i></a></h4><section id="books--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#books--get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/books/:id/</code></div></div><div class="panel-body"><p>Gets a specific book resource using the specified id</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#62b9096c64d202f9fd6cb324c3560148" class="pull-right">Toggle</a></li><li id="62b9096c64d202f9fd6cb324c3560148" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer access_token</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#f14d78b3b580da815ce108011929bc27" class="pull-right">Toggle</a></li><li id="f14d78b3b580da815ce108011929bc27" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>    {
+      "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Dolore dolorem repellendus"</span></span>,
+        "<span class="hljs-attribute">category_id</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Mrs. Eloisa Considine"</span></span>,
+        "<span class="hljs-attribute">edition</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
+        "<span class="hljs-attribute">overview</span>": <span class="hljs-value"><span class="hljs-string">"Dolorem hic repellat consequatur qui molestiae beatae nulla non. Aut in tempore voluptatum veniam. Necessitatibus veniam velit tenetur. Repellendus aperiam aut sit. Dolorum qui id quisquam facere."</span></span>,
+        "<span class="hljs-attribute">preview_image</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">has_soft_copy</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">has_hard_copy</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">hard_copies_count</span>": <span class="hljs-value"><span class="hljs-number">8</span></span>,
+        "<span class="hljs-attribute">borrow_count</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">published_at</span>": <span class="hljs-value"><span class="hljs-string">"1999-09-01T07:00:00.000Z"</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">category</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+          "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Operating System"</span></span>,
+          "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span>
+        </span>}
+      </span>}
+    </span>}
+</code></pre></li></ul></section><h4 id="books-">Resources&nbsp;<a href="#books-"><i class="fa fa-link"></i></a></h4><section id="books--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#books--get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/books/random</code></div></div><div class="panel-body"><p>Gets a random book</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#5bd62a6a458a210be852aaa192882cfe" class="pull-right">Toggle</a></li><li id="5bd62a6a458a210be852aaa192882cfe" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer access_token</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#f14d78b3b580da815ce108011929bc27" class="pull-right">Toggle</a></li><li id="f14d78b3b580da815ce108011929bc27" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>    {
+      "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Dolore dolorem repellendus"</span></span>,
+        "<span class="hljs-attribute">category_id</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+        "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Mrs. Eloisa Considine"</span></span>,
+        "<span class="hljs-attribute">edition</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
+        "<span class="hljs-attribute">overview</span>": <span class="hljs-value"><span class="hljs-string">"Dolorem hic repellat consequatur qui molestiae beatae nulla non. Aut in tempore voluptatum veniam. Necessitatibus veniam velit tenetur. Repellendus aperiam aut sit. Dolorum qui id quisquam facere."</span></span>,
+        "<span class="hljs-attribute">preview_image</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">has_soft_copy</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">has_hard_copy</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">hard_copies_count</span>": <span class="hljs-value"><span class="hljs-number">8</span></span>,
+        "<span class="hljs-attribute">borrow_count</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">published_at</span>": <span class="hljs-value"><span class="hljs-string">"1999-09-01T07:00:00.000Z"</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span></span>,
+        "<span class="hljs-attribute">category</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+          "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Operating System"</span></span>,
+          "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:15.000Z"</span>
+        </span>}
+      </span>}
+    </span>}
+</code></pre></li></ul></section><h4 id="books-">Resources&nbsp;<a href="#books-"><i class="fa fa-link"></i></a></h4><section id="books--delete" class="panel panel-danger"><div class="panel-heading"><div style="float:left"><a href="#books--delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/books/:id</code></div></div><div class="panel-body"><p>Deletes a book. <strong> Note </strong> This doesn’t remove the book from the library physically. (^_^ )</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#bd194ddf742afbf34affff6a37b8ff08" class="pull-right">Toggle</a></li><li id="bd194ddf742afbf34affff6a37b8ff08" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer access_token</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#133961dc5f13b451b4d517a62c88978b" class="pull-right">Toggle</a></li><li id="133961dc5f13b451b4d517a62c88978b" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>    {
+      "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">544</span>
+      </span>}
+    </span>}
+</code></pre></li></ul></section><h4 id="books-">Resources&nbsp;<a href="#books-"><i class="fa fa-link"></i></a></h4><section id="books--post" class="panel panel-success"><div class="panel-heading"><div style="float:left"><a href="#books--post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/books/:id</code></div></div><div class="panel-body"><p>Updates a book. </p>
+<p>Updatable parameters: title, copies,</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#97cf9156c449876939b79a8f656e2210" class="pull-right">Toggle</a></li><li id="97cf9156c449876939b79a8f656e2210" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer access_token</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Some title"</span></span>,
+  "<span class="hljs-attribute">copies</span>": <span class="hljs-value"><span class="hljs-number">10</span>
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#a6c14ece1142a981d1966e9ba393ff28" class="pull-right">Toggle</a></li><li id="a6c14ece1142a981d1966e9ba393ff28" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>    {
+      "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">544</span>
+      </span>}
+    </span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="print-jobs">Print Jobs&nbsp;<a href="#print-jobs"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="articles">Articles&nbsp;<a href="#articles"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="users">Users&nbsp;<a href="#users"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="users-">Resources&nbsp;<a href="#users-"><i class="fa fa-link"></i></a></h4><section id="users--get" class="panel panel-info"><div class="panel-heading"><div style="float:left"><a href="#users--get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/users/:id</code></div></div><div class="panel-body"><p>Gets a user data</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#5a021945c2719bc0fe39bc77c6d17e5e" class="pull-right">Toggle</a></li><li id="5a021945c2719bc0fe39bc77c6d17e5e" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer access_token</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#4f3ab46ac8c1b3d2a0de47b0eacf69c6" class="pull-right">Toggle</a></li><li id="4f3ab46ac8c1b3d2a0de47b0eacf69c6" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>    {
+      "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">3</span></span>,
+        "<span class="hljs-attribute">registration_id</span>": <span class="hljs-value"><span class="hljs-string">"2424KJHJ323"</span></span>,
+        "<span class="hljs-attribute">unique_id</span>": <span class="hljs-value"><span class="hljs-string">"212a55cf2e09"</span></span>,
+        "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+        "<span class="hljs-attribute">address</span>": <span class="hljs-value"><span class="hljs-string">"9198 Belle Station Suite 903\nSouth Nellaview, CA 07713-4581"</span></span>,
+        "<span class="hljs-attribute">gender</span>": <span class="hljs-value"><span class="hljs-string">"M"</span></span>,
+        "<span class="hljs-attribute">first_name</span>": <span class="hljs-value"><span class="hljs-string">"Dominique"</span></span>,
+        "<span class="hljs-attribute">last_name</span>": <span class="hljs-value"><span class="hljs-string">"Kulas"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"staff"</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:14.000Z"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-09-15T17:05:14.000Z"</span>
+      </span>}
+    </span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="undocumented-api-endpoints">Undocumented API Endpoints&nbsp;<a href="#undocumented-api-endpoints"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><ul>
+<li><p><strong> POST </strong> /users/:id/print-jobs</p>
+</li>
+<li><p><strong> GET </strong> /users/:id/print-jobs</p>
+</li>
+<li><p><strong> GET </strong> /users/:id/print-jobs/:id</p>
+</li>
+<li><p><strong> POST </strong> /users/:id/print-jobs/:id/documents Upload</p>
+</li>
+<li><p><strong> GET </strong> /users/:id/print-jobs/:id/documents</p>
+</li>
+</ul>
+</div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 21 Sep 2014</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
+
+</div></body><script src="assets/js/jquery.js"></script><script src="assets/js/bootstrap.js"></script><script>(function() {
+  if (location.protocol === 'file:') {
+    document.getElementById('localFile').style.display = 'block';
+  }
+
+}).call(this);
+</script><script>(function() {
+  $('table').addClass('table');
+
+}).call(this);
+</script></html>
