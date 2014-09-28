@@ -40,12 +40,24 @@ Request for an access token using the Oauth2 User Password/Credentials flow.
 
 Gets book collection. A more specific collection may be retrieved using filters as described below.
 
-Additionally, you can use the `filter` query to get a specific collection. Supported filters
+##### `filter` query
 
-- GET /books?filter=10_most_borrowed
-- GET /books?filter=10_latest
+- GET /books?filter=learning+python
+
+##### `stat` query
+
+- GET /books?stat=10_most_borrowed
+- GET /books?stat=10_latest
 
 ** Note ** You can change the value of '10' to any number
+
+##### `category` query
+
+- GET /books?category=4
+
+###### Advance
+
+- GET /books?category=3&stat=3_most_borrowed Gets the 3 most borrowed books from category ID #3
 
 + Request
 
@@ -136,6 +148,25 @@ Gets a specific book resource using the specified id
               }
             }
 
+## GET /books/categories $
+
+Retrieves all categories
+
++ Response 200 (application/json)
+
+            {
+              "data": [{
+                "id": 1,
+                "title": "Mathematics",
+                "created_at": "2014-09-23T12:50:32.000Z"
+              }, {
+                "id": 2,
+                "title": "Linux",
+                "created_at": "2014-09-23T12:50:32.000Z"
+              }]
+            }
+            
+
 ## GET /books/random
 
 Gets a random book
@@ -222,6 +253,23 @@ Updatable parameters: title, copies,
 
 
 # Group Print Jobs
+
+### GET /print-jobs
+
++ Request
+
+    + Headers
+
+          Authorization: xxxx
+
++ Response 200 (application/json)
+
+    + Body 
+
+          {
+
+          
+          }
 
 # Group Articles
 
